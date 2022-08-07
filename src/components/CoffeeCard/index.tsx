@@ -12,14 +12,7 @@ import {
   ActionsContainer,
 } from './styles'
 
-interface CoffeeCardProps {
-  id: number
-  name: string
-  tags: string[]
-  price: number
-  image: string
-  description: string
-}
+import { Coffee } from '../../contexts/CartContext'
 
 export function CoffeeCard({
   id,
@@ -28,8 +21,19 @@ export function CoffeeCard({
   price,
   image,
   description,
-}: CoffeeCardProps) {
-  const [quantity, setQuantity] = useState(1)
+}: Coffee) {
+  const [amount, setAmount] = useState(1)
+
+  function onAmountChange(amountChange: number) {
+    const newAmount = amount + amountChange
+    if (newAmount >= 1 && newAmount < 10) {
+      setAmount(newAmount)
+    }
+  }
+
+  function handleAddToCart() {
+    console.log('buy', amount)
+  }
 
   return (
     <CoffeeCardContainer>
@@ -49,8 +53,8 @@ export function CoffeeCard({
           R$ <strong>{price.toFixed(2)}</strong>
         </PriceContainer>
         <ActionsContainer>
-          <Counter quantity={quantity} />
-          <button>
+          <Counter amount={amount} handleAmountChange={onAmountChange} />
+          <button onClick={handleAddToCart}>
             <ShoppingCartSimple size={22} weight="fill" />
           </button>
         </ActionsContainer>

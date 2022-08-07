@@ -36,7 +36,7 @@ export const IntroContent = styled.div`
     margin-top: 1rem;
   }
 
-  @media (max-width: 1055px) {
+  @media (max-width: 1275px) {
     flex-direction: column-reverse;
     align-items: center;
   }
@@ -52,7 +52,11 @@ export const IntroContent = styled.div`
 
 export const Cards = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, auto));
+  grid-template-columns: repeat(2, minmax(12rem, auto));
+
+  @media (max-width: 1275px) {
+    grid-template-columns: repeat(2, minmax(12rem, auto));
+  }
 
   margin-top: 4.125rem;
   margin-bottom: 6.75rem;
