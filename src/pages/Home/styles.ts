@@ -36,41 +36,35 @@ export const IntroContent = styled.div`
     margin-top: 1rem;
   }
 
-  @media (max-width: 1275px) {
-    flex-direction: column-reverse;
-    align-items: center;
-  }
-
   padding: 0 10rem;
+
+  padding-top: 5.875rem;
 
   @media (max-width: 700px) {
     padding: 0 3rem;
   }
 
-  padding-top: 5.875rem;
+  @media (max-width: 1275px) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 `
 
 export const Cards = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(12rem, auto));
 
-  @media (max-width: 1275px) {
-    grid-template-columns: repeat(2, minmax(12rem, auto));
-  }
-
   margin-top: 4.125rem;
   margin-bottom: 6.75rem;
 
   gap: 1.25rem 2.5rem;
+
+  @media (max-width: 1275px) {
+    grid-template-columns: repeat(2, minmax(12rem, auto));
+  }
 `
 
 export const CoffeeContainer = styled.main`
-  padding: 0 10rem;
-
-  @media (max-width: 700px) {
-    padding: 0 3rem;
-  }
-
   h2 {
     font-family: 'Baloo 2', cursive;
     color: ${(props) => props.theme['base-title']};
@@ -80,6 +74,12 @@ export const CoffeeContainer = styled.main`
 
     margin-top: 2rem;
     margin-bottom: 3.375rem;
+  }
+
+  padding: 0 10rem;
+
+  @media (max-width: 700px) {
+    padding: 0 3rem;
   }
 `
 

@@ -14,7 +14,7 @@ import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 import { InfoCard } from '../../components/InfoCard'
 
 import { defaultTheme } from '../../styles/themes/default'
-import { CoffeeCard } from '../../components/CoffeeCard'
+import { CoffeeCard } from './components/CoffeeCard'
 
 import { CartContext } from '../../contexts/CartContext'
 

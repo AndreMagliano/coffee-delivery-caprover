@@ -1,4 +1,13 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useReducer } from 'react'
+
+import {
+  AddToCartAction,
+  ClearCartAction,
+  RemoveFromCartAction,
+  UpdateAmountAction,
+} from '../reducers/cart/actions'
+
+import { CartCoffee, cartReducer } from '../reducers/cart/reducer'
 
 export interface Coffee {
   id: number
@@ -9,14 +18,13 @@ export interface Coffee {
   description: string
 }
 
-interface CartCoffee extends Coffee {
-  amount: number
-}
-
 interface CartContextProps {
   cart: CartCoffee[]
-  addToCart: (coffee: CartCoffee) => void
   coffees: Coffee[]
+  AddToCart: (coffe: CartCoffee) => void
+  RemoveFromCart: (id: number) => void
+  UpdateAmount: (id: number, amount: number) => void
+  ClearCart: () => void
 }
 
 interface CartContextProviderProps {
@@ -145,14 +153,37 @@ const coffees = [
 ]
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [cart, setCart] = useState<CartCoffee[]>([])
+  const [cartState, dispatch] = useReducer(cartReducer, { cart: [] })
 
-  function addToCart(coffee: CartCoffee) {
-    setCart([...cart, coffee])
+  const { cart } = cartState
+
+  function AddToCart(coffee: CartCoffee) {
+    dispatch(AddToCartAction(coffee))
+  }
+
+  function RemoveFromCart(id: number) {
+    dispatch(RemoveFromCartAction(id))
+  }
+
+  function UpdateAmount(id: number, amount: number) {
+    dispatch(UpdateAmountAction(id, amount))
+  }
+
+  function ClearCart() {
+    dispatch(ClearCartAction())
   }
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, coffees }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        coffees,
+        AddToCart,
+        RemoveFromCart,
+        UpdateAmount,
+        ClearCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
   )

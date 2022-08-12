@@ -4,7 +4,7 @@ import { IconContainer, InfoCardContainer } from './styles'
 interface InfoCardProps {
   icon: ReactNode
   color: string
-  text: string
+  text: ReactNode
 }
 
 export function InfoCard({ icon, color, text }: InfoCardProps) {

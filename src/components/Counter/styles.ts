@@ -26,5 +26,9 @@ export const CounterContainer = styled.div`
     box-shadow: none;
 
     cursor: pointer;
+
+    &:hover {
+      color: ${(props) => props.theme['purple-dark']};
+    }
   }
 `

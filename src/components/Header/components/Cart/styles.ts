@@ -1,6 +1,10 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const CartContainer = styled.div`
+interface CartContainerProps {
+  amountOfItemsInCart: number
+}
+
+export const CartContainer = styled.div<CartContainerProps>`
   a {
     display: flex;
     align-items: center;
@@ -14,30 +18,34 @@ export const CartContainer = styled.div`
 
     position: relative;
 
-    ::after {
-      content: '5';
+    ${(props) =>
+      props.amountOfItemsInCart > 0
+        ? css`
+            ::after {
+              content: '${props.amountOfItemsInCart}';
 
-      position: absolute;
+              position: absolute;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+              display: flex;
+              align-items: center;
+              justify-content: center;
 
-      top: -8px;
-      right: -8px;
+              top: -8px;
+              right: -8px;
 
-      background-color: ${(props) => props.theme['yellow-dark']};
+              background-color: ${(props) => props.theme['yellow-dark']};
 
-      color: ${(props) => props.theme.white};
+              color: ${(props) => props.theme.white};
 
-      font-size: 0.75rem;
-      font-weight: bold;
-      line-height: 130%;
+              font-size: 0.75rem;
+              font-weight: bold;
 
-      width: 1.25rem;
-      height: 1.25rem;
+              width: 1.25rem;
+              height: 1.25rem;
 
-      border-radius: 1000px;
-    }
+              border-radius: 1000px;
+            }
+          `
+        : null}
   }
 `

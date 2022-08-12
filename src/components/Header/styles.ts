@@ -1,7 +1,11 @@
 import styled from 'styled-components'
 
 export const HeaderContainer = styled.div`
-  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 2rem 10rem;
 
   img {
     width: 5.312rem;
@@ -11,21 +15,13 @@ export const HeaderContainer = styled.div`
     display: flex;
     gap: 0.75rem;
   }
-`
-
-export const HeaderContent = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 10rem;
 
   > a {
     box-shadow: none;
   }
 
   @media (max-width: 700px) {
-    padding: 0 3rem;
+    padding: 2rem 3rem;
   }
 `
 
