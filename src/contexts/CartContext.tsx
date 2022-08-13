@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useReducer } from 'react'
+import { createContext, ReactNode, useReducer, useState } from 'react'
+import { CartCoffee, cartReducer } from '../reducers/cart/reducer'
 
 import {
   AddToCartAction,
@@ -7,7 +8,13 @@ import {
   UpdateAmountAction,
 } from '../reducers/cart/actions'
 
-import { CartCoffee, cartReducer } from '../reducers/cart/reducer'
+interface address {
+  street: string
+  number: number
+  complement: string
+  city: string
+  uf: string
+}
 
 export interface Coffee {
   id: number
@@ -21,10 +28,14 @@ export interface Coffee {
 interface CartContextProps {
   cart: CartCoffee[]
   coffees: Coffee[]
-  AddToCart: (coffe: CartCoffee) => void
-  RemoveFromCart: (id: number) => void
-  UpdateAmount: (id: number, amount: number) => void
-  ClearCart: () => void
+  paymentMethod: string
+  address: address
+  addToCart: (coffe: CartCoffee) => void
+  removeFromCart: (id: number) => void
+  updateAmount: (id: number, amount: number) => void
+  clearCart: () => void
+  changePaymentMethod: (method: string) => void
+  changeAddress: (address: address) => void
 }
 
 interface CartContextProviderProps {
@@ -153,23 +164,34 @@ const coffees = [
 ]
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
+  const [paymentMethod, setPaymentMethod] = useState('Cartão de crédito')
+  const [address, setAddress] = useState<address>({} as address)
+
   const [cartState, dispatch] = useReducer(cartReducer, { cart: [] })
 
   const { cart } = cartState
 
-  function AddToCart(coffee: CartCoffee) {
+  function changePaymentMethod(method: string) {
+    setPaymentMethod(method)
+  }
+
+  function changeAddress(address: address) {
+    setAddress(address)
+  }
+
+  function addToCart(coffee: CartCoffee) {
     dispatch(AddToCartAction(coffee))
   }
 
-  function RemoveFromCart(id: number) {
+  function removeFromCart(id: number) {
     dispatch(RemoveFromCartAction(id))
   }
 
-  function UpdateAmount(id: number, amount: number) {
+  function updateAmount(id: number, amount: number) {
     dispatch(UpdateAmountAction(id, amount))
   }
 
-  function ClearCart() {
+  function clearCart() {
     dispatch(ClearCartAction())
   }
 
@@ -178,10 +200,14 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       value={{
         cart,
         coffees,
-        AddToCart,
-        RemoveFromCart,
-        UpdateAmount,
-        ClearCart,
+        paymentMethod,
+        address,
+        addToCart,
+        removeFromCart,
+        updateAmount,
+        clearCart,
+        changePaymentMethod,
+        changeAddress,
       }}
     >
       {children}

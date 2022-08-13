@@ -1,4 +1,4 @@
-import { ChangeEvent, InputHTMLAttributes, useState } from 'react'
+import { forwardRef, InputHTMLAttributes } from 'react'
 import { Input, InputFormContainer } from './styles'
 
 interface InputFormProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -6,17 +6,14 @@ interface InputFormProps extends InputHTMLAttributes<HTMLInputElement> {
   optional?: boolean
 }
 
-export function InputForm({ columns, optional, ...rest }: InputFormProps) {
-  const [value, setValue] = useState('')
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
-  }
-
-  return (
-    <InputFormContainer columns={columns} optional={optional}>
-      <Input {...rest} onChange={handleChange} value={value} />
-      {optional && value.length === 0 && <span>Opcional</span>}
-    </InputFormContainer>
-  )
-}
+// eslint-disable-next-line react/display-name
+export const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
+  ({ columns, optional, ...rest }, ref) => {
+    return (
+      <InputFormContainer columns={columns} optional={optional}>
+        <Input ref={ref} {...rest} />
+        {optional && <span>Opcional</span>}
+      </InputFormContainer>
+    )
+  },
+)

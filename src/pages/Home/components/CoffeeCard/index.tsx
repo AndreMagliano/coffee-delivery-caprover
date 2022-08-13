@@ -24,7 +24,7 @@ export function CoffeeCard({
 }: Coffee) {
   const [amount, setAmount] = useState(1)
 
-  const { AddToCart } = useContext(CartContext)
+  const { addToCart } = useContext(CartContext)
 
   function onAmountChange(amountChange: number) {
     const newAmount = amount + amountChange
@@ -43,7 +43,7 @@ export function CoffeeCard({
       amount,
     }
 
-    AddToCart(newCoffee)
+    addToCart(newCoffee)
   }
 
   return (

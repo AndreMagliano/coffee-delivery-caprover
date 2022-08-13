@@ -20,19 +20,19 @@ export function CoffeeSelected({
   image,
 }: CoffeeSelectedProps) {
   const [actualAmount, setActualAmount] = useState(amount)
-  const { UpdateAmount, RemoveFromCart } = useContext(CartContext)
+  const { updateAmount, removeFromCart } = useContext(CartContext)
 
   function handleAmountChange(amount: number) {
     const newAmount = actualAmount + amount
 
     if (newAmount >= 1) {
       setActualAmount(newAmount)
-      UpdateAmount(id, newAmount)
+      updateAmount(id, newAmount)
     }
   }
 
   function handleRemoveFromCart() {
-    RemoveFromCart(id)
+    removeFromCart(id)
   }
 
   return (

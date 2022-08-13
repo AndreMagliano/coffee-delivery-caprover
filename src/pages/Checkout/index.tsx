@@ -1,56 +1,64 @@
-import {
-  Bank,
-  CreditCard,
-  CurrencyDollar,
-  MapPinLine,
-  Money,
-} from 'phosphor-react'
-import { useContext, useState } from 'react'
-import { Cart } from '../../components/Header/components/Cart'
+import { FormProvider, useForm } from 'react-hook-form'
+
+import { MapPinLine } from 'phosphor-react'
+import { CheckoutContainer, FormContainer, Info } from './styles'
+
+import * as zod from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+import { Form } from './components/Form'
+import { PaymentMethod } from './components/PaymentMethod'
+import { SelectedCoffees } from './components/SelectedCoffees'
+import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
 import { CartContext } from '../../contexts/CartContext'
-import { CoffeeSelected } from './components/CoffeeSelected'
-import { InputForm } from './components/InputForm'
-import { Select } from './components/Select'
-import {
-  CheckoutContainer,
-  CoffeeSelectedContainer,
-  ConfirmButton,
-  Divider,
-  FormContainer,
-  FormContent,
-  Info,
-  Payment,
-  SelectContainer,
-  Total,
-} from './styles'
+
+const FormSchema = zod.object({
+  cep: zod.string().min(9, 'Digite o CEP').max(9, 'Digite o CEP'),
+  street: zod.string().min(1, 'Digite o nome da rua'),
+  number: zod.number().min(1, 'O número precisa ter no mínimo um digito.'),
+  complement: zod.string(),
+  district: zod.string().min(1, 'Digite o bairro'),
+  city: zod.string().min(1, 'Digite a cidade'),
+  uf: zod.string().min(1, 'Digite o estado'),
+})
+
+type FormType = zod.infer<typeof FormSchema>
 
 export function Checkout() {
-  const [paymentMethod, setPaymentMethod] = useState('Cartão de crédito')
+  const { clearCart, changeAddress } = useContext(CartContext)
+  const navigate = useNavigate()
 
-  const { cart } = useContext(CartContext)
+  const FormState = useForm<FormType>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      cep: '',
+      street: '',
+      complement: '',
+      district: '',
+      city: '',
+      uf: '',
+    },
+  })
 
-  const TotaLItems = cart.reduce(
-    (sum, item) => sum + item.price * item.amount,
-    0,
-  )
-  const TotaLItemsFormatted = Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    minimumFractionDigits: 2,
-  }).format(TotaLItems)
+  const { handleSubmit, reset } = FormState
 
-  const TotaLFormatted = Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    minimumFractionDigits: 2,
-  }).format(TotaLItems + 3.5)
-
-  function handleChangePaymentMethod(method: string) {
-    setPaymentMethod(method)
+  function handleCreateNewOrder(data: FormType) {
+    const newAddress = {
+      street: data.street,
+      number: data.number,
+      complement: data.complement,
+      city: data.city,
+      uf: data.uf,
+    }
+    changeAddress(newAddress)
+    reset()
+    clearCart()
+    navigate('/success')
   }
 
   return (
-    <CheckoutContainer>
+    <CheckoutContainer onSubmit={handleSubmit(handleCreateNewOrder)}>
       <FormContainer>
         <h1>Complete seu pedido</h1>
         <div>
@@ -61,92 +69,16 @@ export function Checkout() {
               <p>Informe o endereço onde deseja receber seu pedido</p>
             </div>
           </Info>
-          <FormContent>
-            <InputForm type="text" placeholder="CEP" />
-            <InputForm type="text" placeholder="Rua" columns={3} />
-            <InputForm type="number" placeholder="Número" min="0" />
-            <InputForm
-              type="text"
-              placeholder="Complemento"
-              columns={2}
-              optional
-            />
-            <InputForm type="text" placeholder="Bairro" />
-            <InputForm type="text" placeholder="Cidade" />
-            <InputForm type="text" placeholder="UF" />
-          </FormContent>
+
+          <FormProvider {...FormState}>
+            <Form />
+          </FormProvider>
         </div>
 
-        <Payment>
-          <Info>
-            <CurrencyDollar size={22} />
-            <div>
-              <strong>Pagamento</strong>
-              <p>
-                O pagamento é feito na entrega. Escolha a forma que deseja pagar
-              </p>
-            </div>
-          </Info>
-          <SelectContainer>
-            <Select
-              icon={<CreditCard size={16} />}
-              label={'Cartão de crédito'}
-              selected={paymentMethod === 'Cartão de crédito'}
-              onClick={() => handleChangePaymentMethod('Cartão de crédito')}
-            />
-            <Select
-              icon={<Bank size={16} />}
-              label={'cartão de débito'}
-              selected={paymentMethod === 'cartão de débito'}
-              onClick={() => handleChangePaymentMethod('cartão de débito')}
-            />
-            <Select
-              icon={<Money size={16} />}
-              label={'dinheiro'}
-              selected={paymentMethod === 'dinheiro'}
-              onClick={() => handleChangePaymentMethod('dinheiro')}
-            />
-          </SelectContainer>
-        </Payment>
+        <PaymentMethod />
       </FormContainer>
 
-      <CoffeeSelectedContainer>
-        <h1>Cafés selecionados</h1>
-        <div>
-          {cart.map((coffee) => {
-            return (
-              <>
-                <CoffeeSelected
-                  id={coffee.id}
-                  amount={coffee.amount}
-                  image={coffee.image}
-                  name={coffee.name}
-                  price={coffee.price}
-                  key={coffee.id}
-                />
-                <Divider />
-              </>
-            )
-          })}
-          <Total>
-            <div>
-              <p>Total de Itens</p>
-              <p>{TotaLItemsFormatted}</p>
-            </div>
-            <div>
-              <p>Entrega</p>
-              <p>R$ 3,50</p>
-            </div>
-            <div>
-              <strong>Total</strong>
-              <strong>{TotaLFormatted}</strong>
-            </div>
-          </Total>
-          <ConfirmButton type="submit" disabled={cart.length === 0}>
-            CONFIRMAR PEDIDO
-          </ConfirmButton>
-        </div>
-      </CoffeeSelectedContainer>
+      <SelectedCoffees />
     </CheckoutContainer>
   )
 }

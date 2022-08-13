@@ -1,12 +1,16 @@
 import { Border, DetailsContainer, OrderInfo, SuccessContainer } from './styles'
-
-import Illustration from '../../assets/Illustration.svg'
-import { InfoCard } from '../../components/InfoCard'
-import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
-
 import { defaultTheme } from '../../styles/themes/default'
 
+import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
+import { InfoCard } from '../../components/InfoCard'
+
+import Illustration from '../../assets/Illustration.svg'
+import { useContext } from 'react'
+import { CartContext } from '../../contexts/CartContext'
+
 export function Success() {
+  const { address, paymentMethod } = useContext(CartContext)
+
   return (
     <SuccessContainer>
       <DetailsContainer>
@@ -20,9 +24,14 @@ export function Success() {
               text={
                 <div>
                   <p>
-                    Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
+                    Entrega em{' '}
+                    <strong>
+                      {address.street}, {address.number}
+                    </strong>
                   </p>
-                  <p>Farrapos - Porto Alegre, RS</p>
+                  <p>
+                    {address.complement} - {address.city}, {address.uf}
+                  </p>
                 </div>
               }
             />
@@ -42,7 +51,7 @@ export function Success() {
               text={
                 <div>
                   <p>Pagamento na entrega</p>
-                  <strong>Cartão de Crédito</strong>
+                  <strong>{paymentMethod}</strong>
                 </div>
               }
             />
