@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useReducer, useState } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useState
+} from 'react'
 import { CartCoffee, cartReducer } from '../reducers/cart/reducer'
 
 import {
@@ -170,6 +176,19 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   const [cartState, dispatch] = useReducer(cartReducer, { cart: [] })
 
   const { cart } = cartState
+  
+  const [cartState, dispatch] = useReducer(cartReducer, { cart: [] }, () => {
+    const cartStateJSON = localStorage.getItem('@coffee-delivery:cart-1.0.0')
+
+    if (cartStateJSON) {
+      return JSON.parse(cartStateJSON)
+    }
+  })
+
+  useEffect(() => {
+    const cartStateJSON = JSON.stringify(cartState)
+    localStorage.setItem('@coffee-delivery:cart-1.0.0', cartStateJSON)
+  }, [cartState])
 
   function changePaymentMethod(method: string) {
     setPaymentMethod(method)
