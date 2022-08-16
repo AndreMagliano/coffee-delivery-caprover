@@ -12,6 +12,7 @@ Coffee Delivery é o segundo desafio da Trilha ReactJS da RocketSeat.
 - Styled-components
 - React-hook-form
 - React-router-dom
+- Phosport-react
 
 ## Links
 <a href="https://www.figma.com/file/Efb6Uu2vrkUWkNnLaz9BzT/Coffee-Delivery-(Copy)?node-id=0%3A1">Design</a>
