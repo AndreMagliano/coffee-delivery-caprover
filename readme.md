@@ -1,4 +1,4 @@
-### Coffee Delivery
+# Coffee Delivery
 <img src="https://i.imgur.com/mg7pKgU.gif">
 Coffee Delivery é o segundo desafio da Trilha ReactJS da RocketSeat.
 
