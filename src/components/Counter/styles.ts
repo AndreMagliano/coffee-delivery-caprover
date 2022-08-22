@@ -12,6 +12,8 @@ export const CounterContainer = styled.div`
   padding: 0.5rem;
 
   p {
+    width: 1rem;
+    text-align: center;
     color: ${(props) => props.theme['base-title']};
     font-size: 1rem;
     line-height: 130%;

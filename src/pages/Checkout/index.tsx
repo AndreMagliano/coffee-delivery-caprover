@@ -20,7 +20,7 @@ const FormSchema = zod.object({
   complement: zod.string(),
   district: zod.string().min(1, 'Digite o bairro'),
   city: zod.string().min(1, 'Digite a cidade'),
-  uf: zod.string().min(1, 'Digite o estado'),
+  state: zod.string().min(1, 'Digite o estado'),
 })
 
 type FormType = zod.infer<typeof FormSchema>
@@ -37,7 +37,7 @@ export function Checkout() {
       complement: '',
       district: '',
       city: '',
-      uf: '',
+      state: '',
     },
   })
 
@@ -49,7 +49,7 @@ export function Checkout() {
       number: data.number,
       complement: data.complement,
       city: data.city,
-      uf: data.uf,
+      state: data.state,
     }
     changeAddress(newAddress)
     reset()

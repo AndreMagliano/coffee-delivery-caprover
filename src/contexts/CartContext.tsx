@@ -3,7 +3,7 @@ import {
   ReactNode,
   useEffect,
   useReducer,
-  useState
+  useState,
 } from 'react'
 import { CartCoffee, cartReducer } from '../reducers/cart/reducer'
 
@@ -19,7 +19,7 @@ interface address {
   number: number
   complement: string
   city: string
-  uf: string
+  state: string
 }
 
 export interface Coffee {
@@ -173,10 +173,6 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   const [paymentMethod, setPaymentMethod] = useState('Cartão de crédito')
   const [address, setAddress] = useState<address>({} as address)
 
-  const [cartState, dispatch] = useReducer(cartReducer, { cart: [] })
-
-  const { cart } = cartState
-  
   const [cartState, dispatch] = useReducer(cartReducer, { cart: [] }, () => {
     const cartStateJSON = localStorage.getItem('@coffee-delivery:cart-1.0.0')
 
@@ -189,6 +185,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     const cartStateJSON = JSON.stringify(cartState)
     localStorage.setItem('@coffee-delivery:cart-1.0.0', cartStateJSON)
   }, [cartState])
+
+  const { cart } = cartState
 
   function changePaymentMethod(method: string) {
     setPaymentMethod(method)

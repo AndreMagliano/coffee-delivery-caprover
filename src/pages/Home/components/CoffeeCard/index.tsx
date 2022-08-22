@@ -44,6 +44,7 @@ export function CoffeeCard({
     }
 
     addToCart(newCoffee)
+    setAmount(1)
   }
 
   return (

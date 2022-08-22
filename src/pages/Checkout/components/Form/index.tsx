@@ -53,7 +53,7 @@ export function Form() {
         placeholder="UF"
         minLength={2}
         maxLength={2}
-        {...register('uf')}
+        {...register('state')}
         required
       />
     </FormContent>

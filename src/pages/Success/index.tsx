@@ -21,39 +21,56 @@ export function Success() {
             <InfoCard
               icon={<MapPin weight="fill" />}
               color={defaultTheme.purple}
-              text={
-                <div>
-                  <p>
-                    Entrega em{' '}
-                    <strong>
-                      {address.street}, {address.number}
-                    </strong>
-                  </p>
-                  <p>
-                    {address.complement} - {address.city}, {address.uf}
-                  </p>
-                </div>
-              }
+              title={[
+                {
+                  type: 'normal',
+                  text: 'Entrega em',
+                },
+                {
+                  type: 'bold',
+                  text: `${address.street}, ${address.number}`,
+                },
+              ]}
+              subtitle={[
+                {
+                  type: 'normal',
+                  text: `${address.complement} ${
+                    address.complement ? '-' : ''
+                  } ${address.city}, ${address.state}`,
+                },
+              ]}
             />
             <InfoCard
               icon={<Timer weight="fill" />}
               color={defaultTheme.yellow}
-              text={
-                <div>
-                  <p>Previsão de entrega</p>
-                  <strong>20 min - 30 min</strong>
-                </div>
-              }
+              title={[
+                {
+                  type: 'normal',
+                  text: 'Previsão de entrega',
+                },
+              ]}
+              subtitle={[
+                {
+                  type: 'bold',
+                  text: '20 min - 30 min',
+                },
+              ]}
             />
             <InfoCard
               icon={<CurrencyDollar weight="fill" />}
               color={defaultTheme['yellow-dark']}
-              text={
-                <div>
-                  <p>Pagamento na entrega</p>
-                  <strong>{paymentMethod}</strong>
-                </div>
-              }
+              title={[
+                {
+                  type: 'normal',
+                  text: 'Pagamento na entrega',
+                },
+              ]}
+              subtitle={[
+                {
+                  type: 'bold',
+                  text: `${paymentMethod}`,
+                },
+              ]}
             />
           </OrderInfo>
         </Border>

@@ -34,22 +34,42 @@ export function Home() {
             <InfoCard
               icon={<ShoppingCart size={16} weight="fill" />}
               color={defaultTheme['yellow-dark']}
-              text="Compra simples e segura"
+              title={[
+                {
+                  type: 'normal',
+                  text: 'Compra simples e segura',
+                },
+              ]}
             />
             <InfoCard
               icon={<Package size={16} weight="fill" />}
               color={defaultTheme['base-text']}
-              text="Embalagem mantém o café intacto"
+              title={[
+                {
+                  type: 'normal',
+                  text: 'Embalagem mantém o café intacto',
+                },
+              ]}
             />
             <InfoCard
               icon={<Timer size={16} weight="fill" />}
               color={defaultTheme.yellow}
-              text="Entrega rápida e rastreada"
+              title={[
+                {
+                  type: 'normal',
+                  text: 'Entrega rápida e rastreada',
+                },
+              ]}
             />
             <InfoCard
               icon={<Coffee size={16} weight="fill" />}
               color={defaultTheme.purple}
-              text="O café chega fresquinho até você"
+              title={[
+                {
+                  type: 'normal',
+                  text: 'O café chega fresquinho até você',
+                },
+              ]}
             />
           </Cards>
         </div>

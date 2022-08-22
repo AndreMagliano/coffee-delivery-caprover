@@ -18,6 +18,14 @@ export function SelectedCoffees() {
     0,
   )
 
+  const frete = TotaLItems > 0 ? 3.5 : 0
+
+  const FreteFormatted = Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+  }).format(frete)
+
   const TotaLItemsFormatted = Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
@@ -28,7 +36,7 @@ export function SelectedCoffees() {
     style: 'currency',
     currency: 'BRL',
     minimumFractionDigits: 2,
-  }).format(TotaLItems + 3.5)
+  }).format(TotaLItems + frete)
 
   return (
     <CoffeeSelectedContainer>
@@ -56,7 +64,7 @@ export function SelectedCoffees() {
           </div>
           <div>
             <p>Entrega</p>
-            <p>R$ 3,50</p>
+            <p>{FreteFormatted}</p>
           </div>
           <div>
             <strong>Total</strong>

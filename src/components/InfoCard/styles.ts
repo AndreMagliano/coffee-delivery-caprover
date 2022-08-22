@@ -11,6 +11,11 @@ export const InfoCardContainer = styled.div`
   gap: 0.75rem;
 
   font-size: 1rem;
+
+  p {
+    display: flex;
+    gap: 0.25rem;
+  }
 `
 
 export const IconContainer = styled.div<IconContainerProps>`
