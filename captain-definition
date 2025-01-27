@@ -1,4 +1,7 @@
- {
-  "schemaVersion": 2,
-  "templateId": "node/8.11.0"
- }
+{
+    "schemaVersion": 2,
+    "dockerfileLines": [
+      "FROM socialengine/nginx-spa:latest", 
+      "RUN chmod -R 777 /dist"
+    ]
+  }
