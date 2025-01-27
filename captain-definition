@@ -2,6 +2,6 @@
     "schemaVersion": 2,
     "dockerfileLines": [
       "FROM socialengine/nginx-spa:latest", 
-      "RUN chmod -R 777 /dist"
+      "RUN chmod -R 777 ./dist"
     ]
   }
